@@ -1,0 +1,388 @@
+*{
+    font-family:Arial, Helvetica, sans-serif
+}
+#preloader { 
+    position: fixed; 
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0; 
+    z-index: 9999; 
+    overflow: hidden; 
+    background: #fff;
+    }
+#preloader::before {
+    content: "";
+    position: fixed;
+    top: calc(50% - 30px);
+    left: calc(50% - 30px);
+    border: 6px solid #f2f2f2; border-top: 6px solid #56829e ; 
+    border-radius: 50%;
+    width: 60px;
+    height: 60px;
+    -webkit-animation: animate-preloader 1s linear infinite; 
+    animation: animate-preloader 1s linear infinite;
+    }
+@-webkit-keyframes animate-preloader {
+    0% {
+    -webkit-transform: rotate(0deg);
+    transform: rotate(0deg); }
+    100% {
+    -webkit-transform: rotate(360deg);
+    transform: rotate(360deg); }
+        }
+@keyframes animate-preloader { 0% {
+    -webkit-transform: rotate(0deg);
+    transform: rotate(0deg); }
+    100% {
+    -webkit-transform: rotate(360deg);
+    transform: rotate(360deg); }
+    }
+body {
+    padding: 0;
+    margin: 0;
+}
+html, body, #map {
+    height: 100%;
+    width: 100vw;
+}
+.fas, .far{
+    font-size: initial;
+}
+.fa-virus{
+    color:green;
+}
+.fa-info-circle{
+    color:blue;
+}
+.fa-cloud-sun{
+    color:rgba(255, 174, 0, 0.76);
+}
+.fa-calendar-day{
+    color:rgb(180, 57, 52);
+}
+.fa-images{
+    color: rgb(128, 128, 128);
+}
+#coronavirusTable i.fas, #coronavirusTable i.far{
+    font-size: 24px;
+    color: green;
+    text-align: left;
+}
+#weatherTable i.fas, #weatherTable i.far,
+#countryInfoTable i.fas, #countryInforTable i.far{
+    font-size: 30px;
+}
+#countryInfoTable thead tr :first-child{
+    text-align: center;
+}
+#countryInfoTable thead tr :last-child{
+    text-align: left;
+    font-size: 1.5rem;
+}
+.fa-thermometer-half{
+color: #f7ffbc;
+}
+.fa-temperature-low{
+    color:blue;
+}
+.fa-temperature-high{
+    color:red;
+}
+.fa-snowflake{
+    color: #2ed6fd;
+}
+.fa-tint{
+    color: #8181ff;
+}
+.fa-tachometer-alt{
+    color: #6b6b6b;
+}
+i.fas.fa-info{
+    color:#b1b1ff;
+}
+.fa-city{
+    color: #5353f9;
+}
+.fa-users{
+    color: #c58a1c;
+}
+.fa-language{
+    color: #fb0000;
+}
+.fa-coins{
+    color: #efef49
+}
+.fa-dollar-sign{
+    color: #037b18;
+}
+.fa-umbrella-beach{
+    font-size: 25px;
+    color: #66cdaa;
+}
+#countryInfo>button, #holidays>button,
+#weather>button, #coronavirus>button, #images>button,
+#news>button{
+    display: none;
+}
+.header{
+    z-index:1;
+    position: relative;
+}
+.countryFlag{
+    width: 20%;
+    border: 1px solid black;
+    position: relative;
+    left: 3%;
+    box-shadow: 2px 2px 1px 1px rgba(0, 0, 0, 0.637);
+}
+#coronavirusContent .countryName{
+    color: white;
+}
+#holidayCalendarContent .countryName{
+    background: #dcdcdcbf;
+    border-radius: 10px;
+}
+.countryName{
+    font-size: 38px;
+}
+#weatherCaption{
+    color:#bdbffb
+}
+caption{
+    font-size: 25px;
+    color:rgb(73, 73, 73);
+}
+#selectionNav{
+    position: fixed;
+    top: 1.5vh;
+    left: 22vw;
+}
+#selectMenu{
+    width: 50vw;
+}
+#map{
+    z-index:0;
+}
+#countryInfoContent, #coronavirusContent, 
+#weatherContent, #holidayCalendarContent{
+    background-size: cover;
+    border-radius: 1.3rem;
+}
+#countryInfoContent{
+    background-image: url('../img/background.png');
+}
+#holidayCalendarContent{
+    background-image: url('../img/holidaybackground.jpg');
+}
+#weatherContent{
+    background: url('../img/weatherbackground.jpg');
+    background-size: cover;
+    color:white;
+}
+#coronavirusContent{
+    background-image: url('../img/covidbackground.png');
+}
+#countryInfoTable, #holidaysTable,
+#weatherTable, #coronavirusTable{
+    background: #041440c4;
+    color: #ffffff;
+    font-size: 1.2rem;
+    border-radius: 30px;
+    display: inline-table;
+}
+#weatherTable{
+    color: #fffefec9;
+}
+#currentWeather{
+    font-size: 1.1rem;
+}
+#coronavirusTable{
+    background: #021308c4;
+    color: #ffffff;
+    font-size: 1.2rem;
+    border-radius: 30px;
+}
+#countryInfoTable th, #countryInfoTable td,
+#holidaysTable th, #weatherTable th, #weatherTable td,
+#coronavirusTable th, #coronavirusTable td{ 
+    border: none;
+    font-weight: 300;
+}
+#countryInfotbody, #holidaytbody, #coronavirustbody{
+    border-top: 3px solid rgb(204, 201, 201);
+}
+tr :last-child{
+    text-align: right;
+}
+#weatherTable thead{
+    border-bottom: 3px solid rgb(204, 201, 201);
+}
+#countryInfotbody tr, #holidaytbody tr{
+    border-top: 1px solid rgba(255, 255, 255, 0.452);
+}
+#holidaytbody tr td{
+    width: 60%;
+}
+tbody tr:hover{
+    background: rgb(33 36 82);
+}
+#coronavirus tbody tr:hover{
+    background-color: rgb(33 82 46);
+}
+#coronavirusInfo {
+    text-align: left;
+}
+#modalHeader{
+    border:none;
+}
+#imagesBody{
+    background-color: #1e3040;
+    border-radius: 4px;
+}
+#imageLabel, #activeImageLabel, #secondImageLabel{
+    text-transform: capitalize;
+    background: #808080bd;
+    border-radius: 10px;
+    position: relative;
+    top: 25px;
+}
+table + span{ 
+    background: #ffffff80;
+    border-radius: 2px;
+}
+#newsModalHeader{
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+}
+#modalHeader button, #holidayCalendarContent button, 
+#weatherContent button, #coronavirusContent button{
+    margin: 0px;
+}
+#articleFlex1{
+    display: flex;
+    justify-content: space-between;
+}
+#articleFlex2{
+    display: flex;
+    flex-direction: column;
+}
+#articleTitle{
+    font-size: 1.5rem;
+    text-align: justify;
+}
+#articleImage{
+    width: 50% !important;
+}
+#author{
+    font-weight: 900;
+}
+#popupInfoAirport, #popupInfoTrains,
+#popupInfoVolcanoes{
+    display: none;
+}
+#airportPopup, #trainsPopup{ 
+    display: grid;
+    grid-template-columns: auto;
+    grid-template-rows: auto auto auto;
+    list-style: none;
+    grid-gap: 15px;
+    margin-left: -45px;
+}
+#volcanoPopup{
+    display: inline-flex;
+}
+#airportIcon{ 
+    grid-column-start: 1;
+    grid-row-start: 2;
+    grid-row-end: 4;
+}
+#trainIcon{ 
+    grid-column-start: 1;
+    grid-row-start: 2;
+    grid-row-end: 4;
+}
+#cityAirport, #cityTrains,
+#cityVolcano{
+    grid-column-start: 2;
+    grid-row-start: 2;
+}
+#codeAirport, #codeTrains{ 
+    grid-column-start: 2;
+    grid-row-start: 3;
+}
+#nameAirport, #nameTrains{
+    grid-row-start: 4;
+    grid-column-start: 1;
+    grid-column-end: 3;
+    text-align: center;
+}
+#nameVolcano{
+    display: inline-flex;
+    width: max-content;
+    align-items: center;
+}
+.fa-plane-departure{
+    left: 4px;
+    font-size: 50px;
+    position: relative;
+    top: 4px;
+}
+.fa-train{
+    left: 15px;
+    font-size: 50px;
+    position: relative;
+    top: 4px;
+}
+#volcanoImage{
+    width: 50px;
+}
+#wikiTitle{
+    font-size: 1.5rem;
+}
+#wikiLink{
+    color: #066161;
+}
+#volcanoPopup{
+    list-style: none;
+    margin-left: -45px;
+}  
+.styleVolcanoPopup .leaflet-popup-tip{
+    color: black;
+    background: #ff0000cf;
+    border: 3px solid #ffffffad;
+    font-size: 1rem;
+}
+.styleVolcanoPopup .leaflet-popup-content-wrapper{
+    color: black;
+    background: #ff0000cf;
+    border: 3px solid #ffffffad;
+    font-size: 1.3rem;
+    font-weight: 900;
+    height: 81px;
+}
+.styleVolcanoPopup .leaflet-popup-content {
+    width: auto !important;
+}
+.styleTrainPopup .leaflet-popup-content-wrapper,  
+.styleTrainPopup .leaflet-popup-tip{
+    color: black;
+    background: #e49600d6;
+    border: 3px solid #ffffffad;
+    font-size: 1rem;
+}
+.styleAirportPopup .leaflet-popup-content-wrapper,  
+.styleAirportPopup .leaflet-popup-tip{
+    color: black;
+    background: #6383ffd9;
+    border: 3px solid #ffffffad;
+    font-size: 1rem;
+}
+.styleWikiPopup .leaflet-popup-content-wrapper,  
+.styleWikiPopup .leaflet-popup-tip{
+    color: black;
+    background: #94dfece0;
+    border: 3px solid #ffffffad;
+    font-size: 1rem;
+}
