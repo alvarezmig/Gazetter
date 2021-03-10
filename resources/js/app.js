@@ -5,7 +5,7 @@ $(window).on('load', function() {
   });
 });
 
-//MAP CODE
+// ======= MAP CODE =======
 
 var map = L.map('map',{
   zoomDelta: 1
@@ -14,14 +14,15 @@ var map = L.map('map',{
 map.setView([0,0], 2);
 
 
-//LAYERS CODE
+// ======= LAYERS CODE =======
 
 var defaultLayer = L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Street_Map/MapServer/tile/{z}/{y}/{x}', {
 attribution: 'Tiles &copy; Esri &mdash; Source: Esri, DeLorme, NAVTEQ, USGS, Intermap, iPC, NRCAN, Esri Japan, METI, Esri China (Hong Kong), Esri (Thailand), TomTom, 2012'
 })
 defaultLayer.addTo(map);
 
-// base layer code 
+// ======= BASE LAYERS CODE =======
+
 var outdoors = L.tileLayer('https://tiles.wmflabs.org/hikebike/{z}/{x}/{y}.png', {
 	maxZoom: 19,
 	attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
@@ -52,7 +53,7 @@ var outdoors = L.tileLayer('https://tiles.wmflabs.org/hikebike/{z}/{x}/{y}.png',
       tilematrixset: 'GoogleMapsCompatible_Level'
   })
 
-//baselayers
+// ======= BASELAYERS VARIABLES =======
 var baseMaps = {
   "Street": defaultLayer,
   "Outdoors": outdoors,
@@ -64,7 +65,7 @@ var baseMaps = {
 };
 
 
-//Ajax function to get borders location
+//======== AJAX TO GET BORDERS LOCATION ======
 
 async function bordersJSON(){
   var borders;
@@ -93,7 +94,8 @@ async function bordersJSON(){
 return borders;
 }
 
-//get user position using navigator and promises
+//======== GET USER POSITION ======
+
 function getPosition() {
  return new Promise(function (resolve, reject) {
      navigator.geolocation.getCurrentPosition(resolve, reject);
@@ -115,8 +117,10 @@ const currentCountry = new Promise ((resolve, reject) => {
         value: coords[0] + "+" + coords[1]
       },
       success: function(data) {
+	      
         //passing lat and lon (obtained using navigator) to opencage API to get ISOCODE and then 
         //using this isocode value to change to user's current country 
+	      
         $('#selectMenu').val(data).change()
 
         
@@ -129,7 +133,7 @@ const currentCountry = new Promise ((resolve, reject) => {
 )
 })
 
-
+//======== WHEN ALL PROMISES SETTLED THEN PASS THE RETRIEVED INFO TO GEOLOC FUNCTION ======
 Promise.allSettled([
   bordersJSON(),
   currentCountry,
@@ -137,9 +141,11 @@ Promise.allSettled([
 
 
 function geoloc(borders) {
-
+	
+//======== AJAX FUNCTIONS TO GET COUNTRY DATA INFORMATION ========
   function countryData(){ 
 
+    //======== DEMOGRAPHICS DATA ========
     async function restcountries(){ 
       var restcountriesData;
       await $.ajax({
@@ -159,7 +165,8 @@ function geoloc(borders) {
       })
       return restcountriesData;
     }
-
+	  
+    //======== WEATHER DATA ========
     async function weather(){
       var weatherData; 
       await $.ajax({
@@ -178,7 +185,8 @@ function geoloc(borders) {
     })
   return weatherData;
 }
-
+    
+    //======== COVID DATA ========
     async function coronavirus(){
       var coronavirusData; 
       await $.ajax({
@@ -197,7 +205,9 @@ function geoloc(borders) {
     })
     return coronavirusData;
 }
-async function opencageQuery(){
+ 
+   //======== LAT LON LOCATION DATA FOR WIKIPEDIA MARKERS ========
+   async function opencageQuery(){
       var opencageData; 
       await $.ajax({
       type: 'GET',
@@ -216,7 +226,8 @@ async function opencageQuery(){
     return opencageData;
 }
 opencageQuery()
-
+	  
+    //======== CURRENCY DATA ========
     async function exchangeRate(){
       var exchangeRateData; 
       await $.ajax({
@@ -234,6 +245,7 @@ opencageQuery()
 }
 exchangeRate();
 
+  //======== NEWS DATA ========
   async function news(){
       var newsData; 
       await $.ajax({
@@ -253,6 +265,7 @@ exchangeRate();
     return newsData;
 }
 
+   //======== NATIONAL HOLIDAYS DATA ========
     async function holidays(){
       var holidaysData; 
       await $.ajax({
@@ -272,6 +285,7 @@ exchangeRate();
     return holidaysData;
 }
 
+    //======== COUNTRY IMAGES DATA ========
     async function images(){
       var imagesData;  
       await $.ajax({
@@ -291,6 +305,7 @@ exchangeRate();
     return imagesData;
 }
 
+    //======== COUNTRY VOLCANOES DATA ========
     async function volcanoes(){
       var volcanoesInfo;
       await $.ajax({
@@ -306,7 +321,8 @@ exchangeRate();
     })
       return volcanoesInfo;
     }
-
+ 
+    //======== COUNTRY AIRPORTS DATA ========
     async function airports(){
       var airportsInfo;
       await $.ajax({
@@ -323,6 +339,7 @@ exchangeRate();
       return airportsInfo;
     }
 
+    //======== WHEN ALL THE FUNCTIONS ARE RESOLVED - PASS THE RETURNED DATA TO ALLDATA FUNCTION ======== 
     Promise.all([
       restcountries(),
       weather(),
@@ -343,6 +360,7 @@ exchangeRate();
     $('#holidaytbody').empty();
     $('#imagesRefresh').empty();
 
+   //======== RETRIEVING WIKIPEDIA LINKS USING LAT AND LON ========
     var latlng = "lat=" + opencageData.results[0].geometry.lat + "&lng=" + opencageData.results[0].geometry.lng;
     
     async function wikipedia(){
@@ -364,6 +382,8 @@ exchangeRate();
     return wikipediaData;
   }
   
+   //======== POPULATING MAPS WITH MARKERS ======== 
+	  
     var airportsCluster = L.markerClusterGroup();
     var airportMarkers;
     var airplaneIcon = L.icon({
@@ -462,11 +482,13 @@ exchangeRate();
       "Wikipedia": wikipediaCluster
       };
 
-      //layers controls 
+      //======== LAYERS CONTROL MENU ======== 
 
       var layersControls = L.control.layers(baseMaps, overlayMaps).setPosition('bottomright').addTo(map);
 
 
+   //======== REORGANISING DATA TO DISPLAY IT IN THE MAP ========
+	  
     var holidaysName = [];
     var holidaysDate = [];
 
@@ -514,11 +536,16 @@ exchangeRate();
     var coronaUpdate = coronaDate.substring(8,10) + "-" + coronaDate.substring(5,7);
 
     var currency = exchangeRateData.rates;
-  
+	  
+	 
+    //======== IF ISO CODE IS THE SAME AS THE SELECTED COUNTRY THEN RETRIEVE INFO AND ZOOM INTO THAT COUNTRY ========
+	  
     $.each(isoCode, function(index){
 
       if(isoCode[index] === $('#selectMenu').val()){
-      
+	      
+      	//======== POPULATING MODALS ========
+	      
         $('.countryName').text(countryName[index]);
         $('.countryFlag').attr('src',restcountriesData[0].flag);
         $('#capital').html(restcountriesData[0].capital);
@@ -621,6 +648,7 @@ exchangeRate();
 
         map.fitBounds(country.getBounds())
 
+	//======== REMOVE PREVIOUS COUNTRY DATA BEFORE DISPLAYING THE NEXT SELECTED COUNTRY INFO ========
         $('#selectMenu').change(function(){
 
           map.removeLayer(country);
@@ -637,7 +665,8 @@ exchangeRate();
   }
   
   countryData();
-
+	
+  //======== CLOSE CURRENT COUNTRY POPUPS WHEN SELECTING A DIFFERENT COUNTRY ========
   $('#selectMenu').change(function(){
     map.closePopup();
     countryData();
@@ -646,7 +675,8 @@ exchangeRate();
 }
 
 
-//buttons
+//======== BUTTONS FOR MAP FUNCTIONALITY AND TO IMPROVE USER EXPERIENCE======== 
+
 L.easyButton("fas fa-globe-europe", function(){
   map.setView([0,0], 2);
 }).addTo(map);
